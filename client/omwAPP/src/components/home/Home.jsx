@@ -1,4 +1,5 @@
 import Featured from "../featured/Featured";
+import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import MailList from "../mailList/MailList";
 import NavBar from "../navbar/NavBar";
@@ -18,6 +19,7 @@ const Home = () => {
         <h1 class="homeTitle">All properties</h1>
         <Places />
         <MailList />
+        <Footer />
       </div>
     </div>
   );

@@ -235,3 +235,55 @@
   font-size: 14px;
   font-weight: 300;
  }
+
+ /*Mail styling*/
+ .mail{
+  width: 100%;
+  margin-top: 50px;
+  background-color: #A82431;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 50px;
+ }
+
+ .mailInputContainer>input{
+  width: 300px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  margin-right: 10px;
+  border-radius: 20px;
+ }
+
+ .mailInputContainer>button{
+  height: 40px;
+  background-color: #D43545;
+  color: white;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+ }
+
+ /*Footer styling*/
+ .footer{
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #A82431;
+ }
+
+ .footerContainer{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #D43545;
+ }
+
+ .footerTitle{
+  font-size: 15px;
+  color: white;
+ }
