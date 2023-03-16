@@ -2,15 +2,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBed,
   faCalendarDays,
+  faFilter,
   faHome,
   faPerson,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/esm/Button";
 import { DateRange } from "react-date-range";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import FiltersModal from "../modals/FiltersModal";
 const Header = ({ type }) => {
+  const navigate = useNavigate();
+  const [filtersModalShow, setFiltersModalShow] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
@@ -25,6 +30,7 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
+  const [destination, setDestination] = useState("");
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -34,11 +40,20 @@ const Header = ({ type }) => {
       };
     });
   };
+
+  const handleSearch = () => {
+    navigate("/hotels", { state: { destination, date, options } });
+  };
   return (
     <div className="header">
-      <div className={type === "list" ? "header-container list-mode" : "header-container"}>
+      <div
+        className={
+          type === "list" ? "header-container list-mode" : "header-container"
+        }
+      >
+      { type === "list" &&
         <div className="header-list">
-          <div className="header-list-item active">
+          {/* <div className="header-list-item active">
             <Button>
               <FontAwesomeIcon icon={faHome} />
               <span>Stays</span>
@@ -49,8 +64,20 @@ const Header = ({ type }) => {
               <FontAwesomeIcon icon={faBed} />
               <span>Beds</span>
             </Button>
+          </div> */}
+          <div>
+            <Button onClick={() => setFiltersModalShow(true)}>
+              <FontAwesomeIcon icon={faFilter} />
+              <span>Filters</span>
+            </Button>
+            <FiltersModal
+              show={filtersModalShow}
+              onHide={() => setFiltersModalShow(false)}
+              date={date}
+            />
           </div>
         </div>
+      }
         {type !== "list" && (
           <>
             <h1 className="headerTitle">
@@ -69,6 +96,7 @@ const Header = ({ type }) => {
                   type="text"
                   placeholder="Where are you going ?"
                   className="headerSearchInput"
+                  onChange={e=>setDestination(e.target.value)}
                 />
               </div>
               <div className="headerSearchItem">
@@ -90,6 +118,7 @@ const Header = ({ type }) => {
                     ranges={date}
                     rangeColors={["#A82431", "#3ecf8e", "#fed14c"]}
                     className="date"
+                    minDate={new Date()}
                   />
                 )}
               </div>
@@ -105,7 +134,7 @@ const Header = ({ type }) => {
                   <div className="options">
                     <div className="optionItem">
                       <span className="otpionText">Adult</span>
-                      <div class="optionCounter">
+                      <div className="optionCounter">
                         <button
                           disabled={options.adult <= 1}
                           className="optionCounterButton"
@@ -125,7 +154,7 @@ const Header = ({ type }) => {
                     </div>
                     <div className="optionItem">
                       <span className="otpionText">Children</span>
-                      <div class="optionCounter">
+                      <div className="optionCounter">
                         <button
                           disabled={options.children <= 0}
                           className="optionCounterButton"
@@ -145,7 +174,7 @@ const Header = ({ type }) => {
                     </div>
                     <div className="optionItem">
                       <span className="otpionText">Room</span>
-                      <div class="optionCounter">
+                      <div className="optionCounter">
                         <button
                           disabled={options.rooms <= 1}
                           className="optionCounterButton"
@@ -167,9 +196,9 @@ const Header = ({ type }) => {
                 )}
               </div>
               <div className="headerSearchItem">
-                <Button>Search</Button>
+                <Button onClick={handleSearch}>Search</Button>
               </div>
-            </div>{" "}
+            </div>
           </>
         )}
       </div>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Featured from "../featured/Featured";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
@@ -7,20 +8,21 @@ import Places from "../propertyList/Places";
 import PropertyList from "../propertyList/PropertList";
 
 const Home = () => {
+  const [modalShow, setModalShow] = useState(false);
   return (
     <div>
       <NavBar />
       <Header />
       <div className="homeContainer">
-        <h1 class="homeTitle">Featured countries</h1>
+        <h1 className="homeTitle">Featured countries</h1>
         <Featured />
-        <h1 class="homeTitle">Browse by property type</h1>
+        <h1 className="homeTitle">Browse by property type</h1>
         <PropertyList />
-        <h1 class="homeTitle">All properties</h1>
-        <Places />
+        {/* <h1 className="homeTitle">All properties</h1>
+        <Places /> */}
         <MailList />
-        <Footer />
       </div>
+      <Footer show={modalShow} onHide={() => setModalShow(false)} />
     </div>
   );
 };
