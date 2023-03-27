@@ -87,15 +87,16 @@ const List = () => {
             <button>Search</button>
           </div>
           <div className="listResult">
-            <SearchItems/>
-            <SearchItems/>
-            <SearchItems/>
-            <SearchItems/>
-            <SearchItems/>
-            <SearchItems/>
-            <SearchItems/>
-            <SearchItems/>
-            <SearchItems/>
+            {/* <SearchItems />
+            <SearchItems />
+            <SearchItems />
+            <SearchItems />
+            <SearchItems />
+            <SearchItems />
+            <SearchItems />
+            <SearchItems />
+            <SearchItems /> */}
+            <Places />
           </div>
         </div>
       </div>
