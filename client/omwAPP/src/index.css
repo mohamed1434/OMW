@@ -360,9 +360,9 @@
   padding: 10px;
   border-radius: 10px;
   position: sticky;
-  top: 10px;
+  top: 120px;
   height: max-content;
-}
+}    
 
 .lsTitle{
   font-size: 20px;
@@ -541,7 +541,8 @@
 /*Show page of places styling*/
 .hotelContainer{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin-top: 20px;
 }
 
@@ -559,11 +560,19 @@
   top: 10px;
   right: 0;
   border: none;
-  background-color: #A82431;
+  background-image: linear-gradient(to right, #D31027 0%, #EA384D  51%, #D31027  100%);
   color: white;
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
+  transition: 0.5s;
+  background-size: 300% auto;
+}
+
+.bookNow:hover{
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
 }
 
 .hotelTitle{
@@ -595,12 +604,14 @@
 
 .hotelImageWrapper{
   width: 33%;
+  margin-bottom: 10px;
 }
 
 .hotelImg{
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 20px;
 }
 
 .hotelDetails{
@@ -623,11 +634,13 @@
   flex: 1;
   display: flex;
   padding: 20px;
-  background-color: #e2acb2;
+  background-color: white; /*#e2acb2*/
   flex-direction: column;
   gap: 20px;
   border-radius: 20px;
   margin-bottom: 60px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.111);
+  border: 1px solid rgba(0, 0, 0, 0.159);
 }
 
 .hotelDetailsPrice>h1{
@@ -644,11 +657,168 @@
 }
 
 .hotelDetailsPrice>button{
-  border: none;
-  background-color: #A82431;
-  color: white;
-  padding: 10px 20px;
+  background-image: linear-gradient(to right, #D31027 0%, #EA384D  51%, #D31027  100%);
+  margin: 10px;
+  padding: 10px; /*15px 45px*/
+  text-align: center;
+  transition: 0.5s;
+  background-size: 300% auto;
+  color: white;            
+  box-shadow: 0 0 20px #eee;
   border-radius: 10px;
+  display: block;
+  border: none;
+}
+
+.hotelDetailsPrice>button:hover{
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+/*Image slider styling*/
+.slider{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.308);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+}
+
+.sliderWrapper{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliderImg{
+  width: 70%;
+  height: 70%;
+  border-radius: 20px;
+}
+
+.closeImg{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
   cursor: pointer;
-  font-weight: bold;
+}
+.arrowImg{
+  cursor: pointer;
+  font-size: 40px;
+  margin: 20px;
+  user-select: none;
+}
+
+/*Category slider styling*/
+.categories{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+}
+
+.cat-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 300;
+}
+
+.swiper-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.swiper-button-next{
+  user-select: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.swiper-button-prev{
+  user-select: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.categories .cat-container span {
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.categories .cat-container span::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: black;
+  transform: scaleX(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+.categories .cat-container:hover span::after {
+  transform: scaleX(1);
+}
+
+.catArrow{
+  cursor: pointer;
+  font-size: 30px;
+  user-select: none;
+}
+
+.categories>button{
+  background-color: #A82431;
+  border: 1px solid #A82431;
+  margin-left: 20px;
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.categories>button:hover{
+  background-color: white;
+  color: black;
+  border: 1px solid #A82431;
+}
+
+/*Show page reviews styling*/
+.reviews {
+  display: flex;
+  flex-direction: column;
+  max-width: 1320px;
+}
+
+.review {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.review img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.review-content {
+  flex-grow: 1;
 }

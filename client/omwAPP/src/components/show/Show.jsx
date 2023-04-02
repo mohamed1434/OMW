@@ -1,10 +1,19 @@
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleArrowLeft,
+  faCircleArrowRight,
+  faCircleXmark,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "../header/Header";
 import NavBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
+import { useState } from "react";
+import Places from "../propertyList/Places";
 
 const Show = () => {
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const [openSlider, setOpenSlider] = useState(false);
   const photos = [
     {
       src: "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
@@ -25,13 +34,51 @@ const Show = () => {
       src: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGhvdGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
     },
   ];
+
+  const handleOpen = (i) => {
+    setSliderIndex(i);
+    setOpenSlider(true);
+  };
+
+  const handleSliding = (direction) => {
+    let newSliderIndex;
+    if (direction === "left") {
+      newSliderIndex = sliderIndex === 0 ? 5 : sliderIndex - 1;
+    } else {
+      newSliderIndex = sliderIndex === 5 ? 0 : sliderIndex + 1;
+    }
+    setSliderIndex(newSliderIndex);
+  };
+
   return (
     <>
       <NavBar />
       <Header type="list" />
       <div className="hotelContainer">
+      {openSlider && (
+          <div className="slider">
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              className="closeImg"
+              onClick={() => setOpenSlider(false)}
+            />
+            <FontAwesomeIcon
+              icon={faCircleArrowLeft}
+              className="arrowImg"
+              onClick={() => handleSliding("left")}
+            />
+            <div className="sliderWrapper">
+              <img src={photos[sliderIndex].src} alt="" className="sliderImg" />
+            </div>
+            <FontAwesomeIcon
+              icon={faCircleArrowRight}
+              className="arrowImg"
+              onClick={() => handleSliding("right")}
+            />
+          </div>
+        )}
         <div className="hotelWrapper">
-        <button className="bookNow">Reserve or Book Now!</button>
+          <button className="bookNow">Reserve or Book Now!</button>
           <h1 className="hotelTitle">Grand Hotel</h1>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot} />
@@ -44,9 +91,13 @@ const Show = () => {
             Book a stay over $114 at this property and get a free airport taxi
           </span>
           <div className="hotelImages">
-            {photos.map((photo) => (
+            {photos.map((photo, i) => (
               <div className="hotelImageWrapper">
-                <img src={photo.src} className="hotelImg" />
+                <img
+                  onClick={() => handleOpen(i)}
+                  src={photo.src}
+                  className="hotelImg"
+                />
               </div>
             ))}
           </div>
@@ -76,7 +127,17 @@ const Show = () => {
               <button>Reserve or Book Now!</button>
             </div>
           </div>
-          <Footer/>
+        </div>
+      </div>
+
+      <div className="reviews">
+      <h1>Reviews</h1>
+        <div className="review">
+          <img src="https://i.pinimg.com/236x/19/eb/69/19eb691fb9a95ef1a6651710688792c9.jpg" alt=""/>
+          <div className="review-content">
+            <h3>User 1</h3>
+            <p>This is a review from User 1</p>
+          </div>
         </div>
       </div>
     </>

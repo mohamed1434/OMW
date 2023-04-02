@@ -7,7 +7,7 @@ const NavBar = () => {
   return (
     <Navbar variant="dark" className="nav-bar">
       <Container>
-        <Navbar.Brand className="logo" href="#home"><img src="../../../public/omw-logo.png" style={{ width: "60px", height: "21px" }}/></Navbar.Brand>
+        <Navbar.Brand className="logo" href="#home"><img src="/omw-logo.png" style={{ width: "60px", height: "21px" }}/></Navbar.Brand>
         <Nav className="ml-auto">
           <Nav.Link href="#home"><Button>Login</Button></Nav.Link>
           <Nav.Link href="#features"><Button>Sign-Up</Button></Nav.Link>
