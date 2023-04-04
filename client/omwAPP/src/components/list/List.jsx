@@ -20,6 +20,7 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import useFetch from "../../hooks/useFetch";
 import "swiper/css";
 
 const List = () => {
@@ -30,6 +31,9 @@ const List = () => {
   const [options, setOptions] = useState(location.state.options);
   const [openList, setOpenList] = useState(false);
 
+  const baseURL = import.meta.env.VITE_REACT_API_URL;
+  const { data, loading, error } = useFetch(baseURL + `/hotels?city=${destination}`);
+console.log(data);
   const categories = [
     {
       id: 1,
@@ -186,7 +190,7 @@ const List = () => {
             <SearchItems />
             <SearchItems />
             <SearchItems /> */}
-            <Places />
+            <Places items={data}/>
           </div>
         </div>
       </div>

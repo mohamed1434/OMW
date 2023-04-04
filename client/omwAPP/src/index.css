@@ -230,6 +230,7 @@
 
  .propertyListTitles>h1{
   font-size: 18px;
+  text-transform: capitalize;
  }
 
  .propertyListTitles>h2{

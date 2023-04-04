@@ -7,7 +7,7 @@ import Placeholder from "react-bootstrap/Placeholder";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-const Places = () => {
+const Places = ({items}) => {
   const [showText, setShowText] = useState(false);
 
   // Use useEffect to set the state to true after 2 seconds
@@ -121,7 +121,7 @@ const Places = () => {
   return (
     <div className="featured">
       <div className="d-flex flex-wrap justify-content-center">
-        {cardsData.map((card, index) => (
+        {items.map((item, index) => (
           <Card
             style={{
               width: "18rem",
@@ -134,7 +134,7 @@ const Places = () => {
           >
             <Card.Img
               variant="top"
-              src={card.img}
+              src={item.photos}
               style={{
                 objectFit: "cover",
                 height: "20rem", // increased height of image
@@ -148,17 +148,17 @@ const Places = () => {
                 <>
                   <div className="placeWrapper">
                     <div className="placeDetails">
-                      <Card.Title>{`${card.city}, ${card.country}`}</Card.Title>
-                      <Card.Text className="t">{card.loc}</Card.Text>
-                      <Card.Text className="t">{card.availablility}</Card.Text>
+                      <Card.Title>{`${item.city}, ${item.type}`}</Card.Title>
+                      <Card.Text className="t">{item.name}</Card.Text>
+                      <Card.Text className="t">{item.address}</Card.Text>
                     </div>
                     <div className="placePrice">
                       <Card.Text>
-                        <b>${card.price}</b> night
+                        <b>${item.cheapestPrice}</b> night
                       </Card.Text>
                       <Card.Text>
                         <FontAwesomeIcon icon={faStar} />
-                        {card.rating}
+                        {item.rating}
                       </Card.Text>
                     </div>
                     {/* <Button variant="primary">Reserve</Button> */}
