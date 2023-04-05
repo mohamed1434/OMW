@@ -30,10 +30,18 @@ const List = () => {
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
   const [openList, setOpenList] = useState(false);
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState();
 
   const baseURL = import.meta.env.VITE_REACT_API_URL;
-  const { data, loading, error } = useFetch(baseURL + `/hotels?city=${destination}`);
-console.log(data);
+  const { data, loading, error, reFetch } = useFetch(
+    baseURL + `/hotels?city=${destination}&min=${min || 0}&max=${max || 999}`
+  );
+
+  const handleClick = () => {
+    reFetch();
+  };
+
   const categories = [
     {
       id: 1,
@@ -140,13 +148,21 @@ console.log(data);
                     <span className="lsOptionText">
                       Min price <small>per night</small>
                     </span>
-                    <input type="number" className="lsOptionInput" />
+                    <input
+                      type="number"
+                      onChange={(e) => setMin(e.target.value)}
+                      className="lsOptionInput"
+                    />
                   </div>
                   <div className="lsOptionItem">
                     <span className="lsOptionText">
                       Max price <small>per night</small>
                     </span>
-                    <input type="number" className="lsOptionInput" />
+                    <input
+                      type="number"
+                      onChange={(e) => setMax(e.target.value)}
+                      className="lsOptionInput"
+                    />
                   </div>
                   <div className="lsOptionItem">
                     <span className="lsOptionText">Adult</span>
@@ -177,20 +193,11 @@ console.log(data);
                   </div>
                 </div>
               </div>
-              <button>Search</button>
+              <button onClick={handleClick}>Search</button>
             </div>
           )}
           <div className="listResult">
-            {/* <SearchItems />
-            <SearchItems />
-            <SearchItems />
-            <SearchItems />
-            <SearchItems />
-            <SearchItems />
-            <SearchItems />
-            <SearchItems />
-            <SearchItems /> */}
-            <Places items={data}/>
+            <Places items={data} />
           </div>
         </div>
       </div>
