@@ -1,6 +1,6 @@
 import NavBar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
@@ -15,6 +15,7 @@ import {
   faHotel,
   faHouse,
   faSwimmingPool,
+  faCaravan
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,22 +26,29 @@ import "swiper/css";
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
-  const [date, setDate] = useState(location.state.date);
+  const [destination, setDestination] = useState(location.state?.destination || ""); //todo
+  const [date, setDate] = useState(location.state?.date || [{ startDate: new Date(), endDate: new Date() }]); //todo
   const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state.options);
+  const [options, setOptions] = useState(location.state?.options || {}); //todo
   const [openList, setOpenList] = useState(false);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState();
-
+  const [type, setType] = useState(null);
+  const navigate = useNavigate();
   const baseURL = import.meta.env.VITE_REACT_API_URL;
   const { data, loading, error, reFetch } = useFetch(
-    baseURL + `/hotels?city=${destination}&min=${min || 0}&max=${max || 999}`
+    baseURL + `/hotels?city=${destination || ""}&min=${min || 0}&max=${max || 999}&type=${type || ""}`
   );
 
   const handleClick = () => {
     reFetch();
   };
+
+  const handleType = (categoryType) => {
+    setType(categoryType);
+    const {data} = reFetch();
+    console.log(data);
+  }
 
   const categories = [
     {
@@ -67,6 +75,11 @@ const List = () => {
       id: 5,
       name: "hotel",
       icon: <FontAwesomeIcon icon={faHotel} />,
+    },
+    {
+      id: 6,
+      name: "caravan",
+      icon: <FontAwesomeIcon icon={faCaravan} />,
     },
   ];
 
@@ -97,11 +110,13 @@ const List = () => {
             prevEl: ".swiper-button-prev",
           }}
         >
-          {categories.map((cat) => (
-            <SwiperSlide>
+          {categories.map((cat,i) => (
+            <SwiperSlide onClick={() => handleType(cat.name)}>
               <div className="swiper-container">
+            <Link to={`/hotels?type=${cat.name}`} state={{ type: cat.name }} >
                 <h2>{cat.icon}</h2>
                 <span>{cat.name}</span>
+            </Link>
               </div>
             </SwiperSlide>
           ))}

@@ -743,6 +743,14 @@
   align-items: center;
 }
 
+.swiper-container a{
+  color: rgba(0, 0, 0, 0.593);
+  text-decoration: none;
+}
+
+.swiper-container a:hover{
+  color: black;
+}
 
 .swiper-button-next{
   user-select: none;
