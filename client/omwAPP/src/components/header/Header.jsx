@@ -8,11 +8,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/esm/Button";
 import { DateRange } from "react-date-range";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import FiltersModal from "../modals/FiltersModal";
+import { SearchContext } from "../../context/SearchContext.jsx";
 const Header = ({ type }) => {
   const navigate = useNavigate();
   const [filtersModalShow, setFiltersModalShow] = useState(false);
@@ -23,7 +24,7 @@ const Header = ({ type }) => {
     children: 0,
     rooms: 1,
   });
-  const [date, setDate] = useState([
+  const [dates, setDates] = useState([
     {
       startDate: new Date(),
       endDate: new Date(),
@@ -41,8 +42,11 @@ const Header = ({ type }) => {
     });
   };
 
+  const { dispatch } = useContext(SearchContext);
+
   const handleSearch = () => {
-    navigate("/hotels", { state: { destination, date, options } });
+    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+    navigate("/hotels", { state: { destination, dates, options } });
   };
   return (
     <div className="header">
@@ -51,9 +55,9 @@ const Header = ({ type }) => {
           type === "list" ? "header-container list-mode" : "header-container"
         }
       >
-      { type === "list" &&
-        <div className="header-list">
-          {/* <div className="header-list-item active">
+        {type === "list" && (
+          <div className="header-list">
+            {/* <div className="header-list-item active">
             <Button>
               <FontAwesomeIcon icon={faHome} />
               <span>Stays</span>
@@ -65,19 +69,19 @@ const Header = ({ type }) => {
               <span>Beds</span>
             </Button>
           </div> */}
-          <div>
-            <Button onClick={() => setFiltersModalShow(true)}>
-              <FontAwesomeIcon icon={faFilter} />
-              <span>Filters</span>
-            </Button>
-            <FiltersModal
-              show={filtersModalShow}
-              onHide={() => setFiltersModalShow(false)}
-              date={date}
-            />
+            {/* <div>
+              <Button onClick={() => setFiltersModalShow(true)}>
+                <FontAwesomeIcon icon={faFilter} />
+                <span>Filters</span>
+              </Button>
+              <FiltersModal
+                show={filtersModalShow}
+                onHide={() => setFiltersModalShow(false)}
+                dates={dates}
+              />
+            </div> */}
           </div>
-        </div>
-      }
+        )}
         {type !== "list" && (
           <>
             <h1 className="headerTitle">
@@ -96,7 +100,7 @@ const Header = ({ type }) => {
                   type="text"
                   placeholder="Where are you going ?"
                   className="headerSearchInput"
-                  onChange={e=>setDestination(e.target.value)}
+                  onChange={(e) => setDestination(e.target.value)}
                 />
               </div>
               <div className="headerSearchItem">
@@ -106,16 +110,16 @@ const Header = ({ type }) => {
                     setOpenDate(!openDate);
                   }}
                   className="headerSearchText"
-                >{`${format(date[0].startDate, "dd/MM/yy")} to ${format(
-                  date[0].endDate,
+                >{`${format(dates[0].startDate, "dd/MM/yy")} to ${format(
+                  dates[0].endDate,
                   "dd/MM/yy"
                 )}`}</span>
                 {openDate && (
                   <DateRange
                     editableDateInputs={true}
-                    onChange={(item) => setDate([item.selection])}
+                    onChange={(item) => setDates([item.selection])}
                     moveRangeOnFirstSelection={false}
-                    ranges={date}
+                    ranges={dates}
                     rangeColors={["#A82431", "#3ecf8e", "#fed14c"]}
                     className="date"
                     minDate={new Date()}

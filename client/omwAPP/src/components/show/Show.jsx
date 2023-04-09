@@ -8,10 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "../header/Header";
 import NavBar from "../navbar/Navbar";
 import Footer from "../footer/Footer";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Places from "../propertyList/Places";
 import { useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import { SearchContext } from "../../context/SearchContext.jsx";
 
 const Show = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
@@ -22,6 +23,17 @@ const Show = () => {
   const { data, loading, error, reFetch } = useFetch(
     baseURL + `/hotels/show/${placeID}`
   );
+
+  const { dates, options } = useContext(SearchContext);
+
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(endDate, startDate) {
+    const timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
+
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
   const handleOpen = (i) => {
     setSliderIndex(i);
@@ -83,7 +95,8 @@ const Show = () => {
               Excellent location - {data.distance}m from center
             </span>
             <span className="hotelPriceHighLight">
-              Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
+              Book a stay over ${data.cheapestPrice} at this property and get a
+              free airport taxi
             </span>
             <div className="hotelImages">
               {data.photos?.map((photo, i) => (
@@ -99,18 +112,16 @@ const Show = () => {
             <div className="hotelDetails">
               <div className="hotelDetailsTexts">
                 <h1 className="hotelTitle">{data.title}</h1>
-                <p className="hotelDesc">
-                  {data.desc}
-                </p>
+                <p className="hotelDesc">{data.desc}</p>
               </div>
               <div className="hotelDetailsPrice">
-                <h1>Perfect for a 9-night stay!</h1>
+                <h1>Perfect for a {days}-night stay!</h1>
                 <span>
                   Located in the real heart of Kuwait, this property has an
                   excellent location score of 9.8!
                 </span>
                 <h2>
-                  <b>$945</b> (9 nights)
+                  <b>${days * data.cheapestPrice * options.rooms}</b> ({days} nights/{options.rooms} {options.rooms === 1 ? 'room' : 'rooms'})
                 </h2>
                 <button>Reserve or Book Now!</button>
               </div>

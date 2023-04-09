@@ -27,7 +27,7 @@ import "swiper/css";
 const List = () => {
   const location = useLocation();
   const [destination, setDestination] = useState(location.state?.destination || ""); //todo
-  const [date, setDate] = useState(location.state?.date || [{ startDate: new Date(), endDate: new Date() }]); //todo
+  const [dates, setDates] = useState(location.state?.dates || [{ startDate: new Date(), endDate: new Date() }]); //todo
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state?.options || {}); //todo
   const [openList, setOpenList] = useState(false);
@@ -46,8 +46,7 @@ const List = () => {
 
   const handleType = (categoryType) => {
     setType(categoryType);
-    const {data} = reFetch();
-    console.log(data);
+    reFetch();
   }
 
   const categories = [
@@ -145,14 +144,14 @@ const List = () => {
               <div className="lsItem">
                 <label>Check-in Date</label>
                 <span onClick={() => setOpenDate(!openDate)}>{`${format(
-                  date[0].startDate,
+                  dates[0].startDate,
                   "MM/dd/yyyy"
-                )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+                )} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
                 {openDate && (
                   <DateRange
-                    onChange={(item) => setDate([item.selection])}
+                    onChange={(item) => setDates([item.selection])}
                     minDate={new Date()}
-                    ranges={date}
+                    ranges={dates}
                   />
                 )}
               </div>
