@@ -831,3 +831,27 @@
 .review-content {
   flex-grow: 1;
 }
+
+/*Login/Logout styling*/
+.login-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-container>input{
+  width: 50%;
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  padding: 5px;
+}
+
+.login-btn{
+  background-color: #D31027;
+}
+
+.logged-in{
+  display: flex;
+  gap: 10px;
+}

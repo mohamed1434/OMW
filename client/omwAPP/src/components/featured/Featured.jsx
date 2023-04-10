@@ -3,7 +3,7 @@ import useFetch from "../../hooks/useFetch";
 const Featured = () => {
   const baseURL = import.meta.env.VITE_REACT_API_URL;
   const { data, loading, error } = useFetch(
-    baseURL + "/hotels/countByCity?cities=kuwait city,beirut,amman"
+    baseURL + "/hotels/countByCity?cities=Kuwait city,Beirut,Amman"
   );
   return (
     <div className="featured">
