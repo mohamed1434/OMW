@@ -7,16 +7,19 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "../header/Header";
 import NavBar from "../navbar/Navbar";
-import Footer from "../footer/Footer";
 import { useContext, useState } from "react";
-import Places from "../propertyList/Places";
 import { useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { SearchContext } from "../../context/SearchContext.jsx";
+import { AuthContext } from "../../context/AuthContext";
+import Reserve from "../reserve/Reserve";
+import { Alert } from "react-bootstrap";
 
 const Show = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
+  const [show, setShow] = useState(true);
   const [openSlider, setOpenSlider] = useState(false);
+  const [openReservation, setOpenReservation] = useState(false);
   const location = useLocation();
   const placeID = location.pathname.split("/")[2];
   const baseURL = import.meta.env.VITE_REACT_API_URL;
@@ -25,6 +28,8 @@ const Show = () => {
   );
 
   const { dates, options } = useContext(SearchContext);
+
+  const { user } = useContext(AuthContext);
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(endDate, startDate) {
@@ -48,6 +53,15 @@ const Show = () => {
       newSliderIndex = sliderIndex === 5 ? 0 : sliderIndex + 1;
     }
     setSliderIndex(newSliderIndex);
+  };
+
+  const handleReservation = () => {
+    if (user) {
+      setOpenReservation(true);
+    } else {
+      setShow(true);
+      alert("You need to be logged in !");
+    }
   };
 
   return (
@@ -121,9 +135,18 @@ const Show = () => {
                   excellent location score of 9.8!
                 </span>
                 <h2>
-                  <b>${days * data.cheapestPrice * options.rooms}</b> ({days} nights/{options.rooms} {options.rooms === 1 ? 'room' : 'rooms'})
+                  <b>${days * data.cheapestPrice * options.rooms}</b> ({days}{" "}
+                  nights/{options.rooms}{" "}
+                  {options.rooms === 1 ? "room" : "rooms"})
                 </h2>
-                <button>Reserve or Book Now!</button>
+                <button onClick={handleReservation}>
+                  Reserve or Book Now!
+                </button>
+                <Reserve
+                  show={openReservation}
+                  onHide={() => setOpenReservation(false)}
+                  hotelid={placeID}
+                />
               </div>
             </div>
           </div>
