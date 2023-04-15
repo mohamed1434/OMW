@@ -17,6 +17,7 @@ import { Alert } from "react-bootstrap";
 
 const Show = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
   const [show, setShow] = useState(true);
   const [openSlider, setOpenSlider] = useState(false);
   const [openReservation, setOpenReservation] = useState(false);
@@ -38,7 +39,9 @@ const Show = () => {
     return diffDays;
   }
 
-  const days = dayDifference(dates[0].endDate, dates[0].startDate);
+  const days = dates && dates.length > 0
+  ? dayDifference(dates[0].endDate, dates[0].startDate)
+  : 0;
 
   const handleOpen = (i) => {
     setSliderIndex(i);
@@ -59,7 +62,7 @@ const Show = () => {
     if (user) {
       setOpenReservation(true);
     } else {
-      setShow(true);
+      // setShow(true);
       alert("You need to be logged in !");
     }
   };
@@ -142,11 +145,14 @@ const Show = () => {
                 <button onClick={handleReservation}>
                   Reserve or Book Now!
                 </button>
-                <Reserve
+                {/* <Reserve
                   show={openReservation}
                   onHide={() => setOpenReservation(false)}
                   hotelid={placeID}
-                />
+                /> */}
+                {openReservation && (
+                  <Reserve setOpen={setOpenReservation} hotelid={placeID} />
+                )}
               </div>
             </div>
           </div>

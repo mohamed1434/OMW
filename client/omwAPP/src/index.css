@@ -874,6 +874,7 @@
   background-color: white;
   padding: 20px;
   position: relative;
+  border-radius: 20px;
 }
 
 .rClose {
@@ -881,6 +882,8 @@
   top: 0;
   right: 0;
   cursor: pointer;
+  margin: 20px;
+  font-size: 25px;
 }
 
 .rItem{

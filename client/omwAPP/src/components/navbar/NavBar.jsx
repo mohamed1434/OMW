@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import Login from "../login/Login";
 import { AuthContext } from "../../context/AuthContext";
@@ -11,10 +11,13 @@ const NavBar = () => {
   const baseURL = import.meta.env.VITE_REACT_API_URL;
   const { user, dispatch } = useContext(AuthContext);
   const [modalShow, setModalShow] = useState(false);
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("user");
     window.location.reload();
-  };
+    navigate("/");
+  };  
+  
   return (
     <Navbar variant="dark" className="nav-bar">
       <Container>
