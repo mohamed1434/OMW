@@ -43,9 +43,7 @@ const Places = ({items}) => {
                 borderRadius: "20px",
               }}
             />
-
             <Card.Body>
-              {showText ? (
                 <>
                   <div className="placeWrapper">
                     <div className="placeDetails">
@@ -65,19 +63,6 @@ const Places = ({items}) => {
                     {/* <Button variant="primary">Reserve</Button> */}
                   </div>
                 </>
-              ) : (
-                <>
-                  <Placeholder as={Card.Title} animation="glow">
-                    <Placeholder xs={6} />
-                  </Placeholder>
-                  <Placeholder as={Card.Text} animation="glow">
-                    <Placeholder xs={7} /> <Placeholder xs={4} />{" "}
-                    <Placeholder xs={4} /> <Placeholder xs={6} />{" "}
-                    <Placeholder xs={8} />
-                  </Placeholder>
-                  <Placeholder.Button variant="dark" xs={6} />
-                </>
-              )}
             </Card.Body>
           </Link>
         ))}

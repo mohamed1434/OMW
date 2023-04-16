@@ -1,4 +1,5 @@
 import useFetch from "../../hooks/useFetch";
+import Skeleton from "../skeleton/Skeleton";
 
 const Featured = () => {
   const baseURL = import.meta.env.VITE_REACT_API_URL;
@@ -8,7 +9,7 @@ const Featured = () => {
   return (
     <div className="featured">
       {loading ? (
-        "Loading please wait"
+        <Skeleton type="featured"/>
       ) : (
         <>
           <div className="featuredItem">

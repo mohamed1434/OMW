@@ -15,7 +15,7 @@ import {
   faHotel,
   faHouse,
   faSwimmingPool,
-  faCaravan
+  faCaravan,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,11 +23,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import useFetch from "../../hooks/useFetch";
 import "swiper/css";
+import Skeleton from "../skeleton/Skeleton";
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state?.destination || ""); //todo
-  const [dates, setDates] = useState(location.state?.dates || [{ startDate: new Date(), endDate: new Date() }]); //todo
+  const [destination, setDestination] = useState(
+    location.state?.destination || ""
+  ); //todo
+  const [dates, setDates] = useState(
+    location.state?.dates || [{ startDate: new Date(), endDate: new Date() }]
+  ); //todo
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state?.options || {}); //todo
   const [openList, setOpenList] = useState(false);
@@ -37,8 +42,13 @@ const List = () => {
   const navigate = useNavigate();
   const baseURL = import.meta.env.VITE_REACT_API_URL;
   const { data, loading, error, reFetch } = useFetch(
-    baseURL + `/hotels?city=${destination || ""}&min=${min || 0}&max=${max || 999}&type=${type || ""}`
+    baseURL +
+      `/hotels?city=${destination || ""}&min=${min || 0}&max=${
+        max || 999
+      }&type=${type || ""}`
   );
+
+  console.log(loading);
 
   const handleClick = () => {
     reFetch();
@@ -47,7 +57,7 @@ const List = () => {
   const handleType = (categoryType) => {
     setType(categoryType);
     reFetch();
-  }
+  };
 
   const categories = [
     {
@@ -109,13 +119,16 @@ const List = () => {
             prevEl: ".swiper-button-prev",
           }}
         >
-          {categories.map((cat,i) => (
+          {categories.map((cat, i) => (
             <SwiperSlide onClick={() => handleType(cat.name)}>
               <div className="swiper-container">
-            <Link to={`/hotels?type=${cat.name}`} state={{ type: cat.name }} >
-                <h2>{cat.icon}</h2>
-                <span>{cat.name}</span>
-            </Link>
+                <Link
+                  to={`/hotels?type=${cat.name}`}
+                  state={{ type: cat.name }}
+                >
+                  <h2>{cat.icon}</h2>
+                  <span>{cat.name}</span>
+                </Link>
               </div>
             </SwiperSlide>
           ))}
@@ -210,9 +223,15 @@ const List = () => {
               <button onClick={handleClick}>Search</button>
             </div>
           )}
-          <div className="listResult">
-            <Places items={data} />
-          </div>
+          {loading ? (
+            <div className="places-skel">
+            <Skeleton type="places" counter={28} />
+            </div>
+          ) : (
+            <div className="listResult">
+              <Places items={data} />
+            </div>
+          )}
         </div>
       </div>
     </div>

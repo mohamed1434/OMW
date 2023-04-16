@@ -939,3 +939,9 @@
   display: flex;
   flex-direction: column;
 }
+
+/*Places Skeleton*/
+.places-skel{
+  display: flex;
+  flex-wrap: wrap;
+}

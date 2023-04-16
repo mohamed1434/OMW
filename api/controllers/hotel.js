@@ -55,7 +55,11 @@ export const getHotels = async (req, res, next) => {
       ...query,
       cheapestPrice: { $gte: min || 1, $lte: max || 999 },
     }).limit(req.query.limit);
-    res.status(200).json(hotels);
+
+    setTimeout(()=>{
+      res.status(200).json(hotels);
+    },2000)
+    
   } catch (err) {
     next(err);
   }
