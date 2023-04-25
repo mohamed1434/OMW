@@ -5,6 +5,7 @@ import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
+import reviewRoute from "./routes/reviews.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -35,6 +36,7 @@ app.use(cors());
 app.use("/auth", authRoute);
 app.use("/users", usersRoute);
 app.use("/hotels", hotelsRoute);
+app.use("/hotels/:id/reviews", reviewRoute);
 app.use("/rooms", roomsRoute);
 
 app.use((err, req, res, next) => {

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Review from "./Review.js";
 const { Schema } = mongoose;
 
 const HotelSchema = new Schema({
@@ -49,6 +50,26 @@ const HotelSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
+});
+
+HotelSchema.post('findOneAndDelete', async function (doc) {
+  if (doc) {
+      await Review.deleteMany({
+          _id: {
+              $in: doc.reviews
+          }
+      });
+  }
 });
 
 export default mongoose.model("Hotel", HotelSchema);

@@ -9,18 +9,19 @@ import {
   getHotels,
   updateHotel,
 } from "../controllers/hotel.js";
-import { verifyAdmin } from "../utils/verifyToken.js";
+import { verifyAdmin, verifyUser } from "../utils/verifyToken.js";
+import { isOwner } from "../utils/middlewares.js";
 
 const router = express.Router();
 
 //CREATE
-router.post("/", verifyAdmin, createHotel);
+router.post("/", verifyUser, createHotel);
 
 //UPDATE
-router.put("/:id", verifyAdmin, updateHotel);
+router.put("/:id", verifyUser, isOwner, updateHotel);
 
 //DELETE
-router.delete("/:id", verifyAdmin, deleteHotel);
+router.delete("/:id", verifyUser, isOwner, deleteHotel);
 
 //GET
 router.get("/show/:id", getHotel);
@@ -30,5 +31,8 @@ router.get("/", getHotels);
 router.get("/countByCity", countByCity);
 router.get("/countByType", countByType);
 router.get("/room/:id", getHotelRoom);
+
+//Testing get properties of the owner
+// router.get()
 
 export default router;

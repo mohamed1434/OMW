@@ -113,7 +113,7 @@ const List = () => {
         <Swiper
           modules={[Navigation]}
           spaceBetween={50}
-          slidesPerView={3}
+          slidesPerView={6}
           navigation={{
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
