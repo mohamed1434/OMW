@@ -38,7 +38,12 @@ export const deleteHotel = async (req, res, next) => {
 
 export const getHotel = async (req, res, next) => {
   try {
-    const hotel = await Hotel.findById(req.params.id);
+    const hotel = await Hotel.findById(req.params.id).populate({
+      path: "reviews",
+      populate: {
+        path: "owner",
+      },
+    });
     res.status(200).json(hotel);
   } catch (error) {
     next(error);
@@ -57,10 +62,9 @@ export const getHotels = async (req, res, next) => {
       cheapestPrice: { $gte: min || 1, $lte: max || 999 },
     }).limit(req.query.limit);
 
-    setTimeout(()=>{
+    setTimeout(() => {
       res.status(200).json(hotels);
-    },2000)
-    
+    }, 2000);
   } catch (err) {
     next(err);
   }

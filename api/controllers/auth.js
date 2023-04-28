@@ -8,12 +8,24 @@ export const register = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({
+      phone: req.body.phone,
       username: req.body.username,
       email: req.body.email,
       password: hash,
     });
     await newUser.save();
-    res.status(200).send("Successfully created a user");
+    // res.status(200).send("Successfully created a user");
+    const token = jwt.sign(
+      { id: newUser._id, isAdmin: newUser.isAdmin },
+      process.env.JWT
+    );
+    const { password, isAdmin, ...otherDetails } = newUser._doc;
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ ...otherDetails });
   } catch (error) {
     next(error);
   }

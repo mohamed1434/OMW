@@ -14,6 +14,7 @@ import { SearchContext } from "../../context/SearchContext.jsx";
 import { AuthContext } from "../../context/AuthContext";
 import Reserve from "../reserve/Reserve";
 import { Alert } from "react-bootstrap";
+import Reviews from "../reviews/Reviews";
 
 const Show = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
@@ -159,7 +160,7 @@ const Show = () => {
         </div>
       )}
 
-      <div className="reviews">
+      {/* <div className="reviews">
         <h1>Reviews</h1>
         <div className="review">
           <img
@@ -171,7 +172,9 @@ const Show = () => {
             <p>This is a review from User 1</p>
           </div>
         </div>
-      </div>
+      </div> */}
+      <hr class="light-grey-line" />
+      <Reviews data={data}/>
     </>
   );
 };

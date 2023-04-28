@@ -6,18 +6,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import Login from "../login/Login";
 import { AuthContext } from "../../context/AuthContext";
+import Register from "../Register/Register";
 
 const NavBar = () => {
   const baseURL = import.meta.env.VITE_REACT_API_URL;
   const { user, dispatch } = useContext(AuthContext);
   const [modalShow, setModalShow] = useState(false);
+  const [registerShow, setRegisterShow] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("user");
     window.location.reload();
     navigate("/");
-  };  
-  
+  };
+
   return (
     <Navbar variant="dark" className="nav-bar">
       <Container>
@@ -43,7 +45,11 @@ const NavBar = () => {
               <Login show={modalShow} onHide={() => setModalShow(false)} />
             </Nav.Link>
             <Nav.Link>
-              <Button>Sign-Up</Button>
+              <Button onClick={() => setRegisterShow(true)}>Sign-Up</Button>
+              <Register
+                show={registerShow}
+                onHide={() => setRegisterShow(false)}
+              />
             </Nav.Link>
           </Nav>
         )}

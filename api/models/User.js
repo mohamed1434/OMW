@@ -17,6 +17,13 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    img:{
+      type: String
+    },
+    phone:{
+      type:String,
+      required:true
+    },
     isAdmin: {
       type: Boolean,
       default: false,

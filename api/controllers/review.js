@@ -52,7 +52,9 @@ export const createReview = async (req, res, next) => {
   } catch (error) {
     if (error.code === 11000) {
       // Handle duplicate key error (user has already left a review for this hotel)
-      res.status(400).json({ message: "You have already left a review for this hotel" });
+      res
+        .status(400)
+        .json({ message: "You have already left a review for this hotel" });
     } else {
       next(error);
     }
@@ -67,5 +69,22 @@ export const deleteReview = async (req, res, next) => {
     res.status(200).json("Review deleted !");
   } catch (error) {
     next(error);
+  }
+};
+
+export const getReviews = async (req, res, next) => {
+  try {
+    const Reviews = await Review.find();
+    res.status(200).json(Reviews);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPropertyReviews = async (req, res, next) => {
+  try {
+    const hotelId = req.params.id;
+  } catch (error) {
+    
   }
 };
