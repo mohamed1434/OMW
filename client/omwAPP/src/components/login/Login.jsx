@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Login = (props) => {
   const baseURL = import.meta.env.VITE_REACT_API_URL;
@@ -15,17 +16,38 @@ const Login = (props) => {
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   dispatch({ type: "LOGIN_START" });
+  //   try {
+  //     const res = await axios.post(baseURL + "/auth/login", credentials);
+  //     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+  //     props.onHide();
+  //   } catch (error) {
+  //     dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
+  //   }
+  // };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post(baseURL + "/auth/login", credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      props.onHide();
+      const res = await axios.post(baseURL + "/auth/login", credentials, {
+        withCredentials: true,
+      });
+      if (res && res.data) {
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+        const access_token = Cookies.get("access_token"); // Wait for the cookie to be set
+        Cookies.set("access_token", access_token, { expires: 1 }); // set the token in a cookie with a 1-day expiration
+        props.onHide();
+      } else {
+        dispatch({ type: "LOGIN_FAILURE", payload: "Invalid response" });
+      }
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
     }
   };
+
   return (
     <Modal
       {...props}

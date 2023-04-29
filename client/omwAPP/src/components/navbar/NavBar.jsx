@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import Login from "../login/Login";
 import { AuthContext } from "../../context/AuthContext";
 import Register from "../Register/Register";
+import DropDown from "../userProfile/DropDown";
 
 const NavBar = () => {
   const baseURL = import.meta.env.VITE_REACT_API_URL;
@@ -14,11 +15,11 @@ const NavBar = () => {
   const [modalShow, setModalShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
   const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    window.location.reload();
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("user");
+  //   window.location.reload();
+  //   navigate("/");
+  // };
 
   return (
     <Navbar variant="dark" className="nav-bar">
@@ -33,10 +34,11 @@ const NavBar = () => {
         </Link>
         {user ? (
           <div className="logged-in">
-            <h4>{user.username}</h4>
-            <Button variant="danger" onClick={handleLogout}>
+            {/* <h4>{user.username}</h4> */}
+            {/* <Button variant="danger" onClick={handleLogout}>
               Logout
-            </Button>
+            </Button> */}
+            <DropDown/>
           </div>
         ) : (
           <Nav className="ml-auto">

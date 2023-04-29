@@ -49,13 +49,13 @@ export const login = async (req, res, next) => {
       process.env.JWT
     );
 
-    const { password, isAdmin, ...otherDetails } = user._doc;
+    const { password, isAdmin, img, ...otherDetails } = user._doc;
     res
       .cookie("access_token", token, {
         httpOnly: true,
       })
       .status(200)
-      .json({ ...otherDetails });
+      .json({ ...otherDetails, img });
   } catch (error) {
     next(error);
   }

@@ -15,7 +15,6 @@ const Reviews = ({ data }) => {
     });
     averageRating = Math.round(totalRating / data.reviews.length);
   }
-  console.log(data);
   return (
     <div className="reviews-container">
       <div className="reviews-title">

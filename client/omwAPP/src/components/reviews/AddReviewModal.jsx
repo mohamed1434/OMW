@@ -8,11 +8,7 @@ import axios from "axios";
 const AddReviewModal = (props) => {
   const [rating, setRating] = useState(0);
   const [reviewBody, setReviewBody] = useState("");
-
-  const userToken = localStorage.getItem("user");
-  const config = {
-    headers: { Authorization: `Bearer ${userToken}` },
-  };
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const baseURL = import.meta.env.VITE_REACT_API_URL;
   const handleRatingChange = (newRating) => {
@@ -30,10 +26,12 @@ const AddReviewModal = (props) => {
       await axios.post(
         baseURL + `/hotels/${props.data._id}/reviews`,
         data,
-        config
+        {
+          withCredentials: true,
+        }
       );
     } catch (error) {
-      console.log(error);
+      setErrorMessage(error.response.data.message);
     }
   };
   return (
@@ -71,6 +69,7 @@ const AddReviewModal = (props) => {
         <Button variant="danger" onClick={handleAdd}>
           Add
         </Button>
+        {errorMessage && <span>{errorMessage}</span>}
       </Modal.Footer>
     </Modal>
   );

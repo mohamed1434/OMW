@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Register = (props) => {
   const baseURL = import.meta.env.VITE_REACT_API_URL;
@@ -21,8 +22,12 @@ const Register = (props) => {
     e.preventDefault();
     dispatch({ type: "REGISTER_START" });
     try {
-      const res = await axios.post(baseURL + "/auth/register", credentials);
+      const res = await axios.post(baseURL + "/auth/register", credentials, {
+        withCredentials: true,
+      });
       dispatch({ type: "REGISTER_SUCCESS", payload: res.data });
+      const access_token = Cookies.get("access_token");
+      Cookies.set("access_token", access_token, { expires: 1 });
       props.onHide();
     } catch (error) {
       dispatch({ type: "REGISTER_FAILURE", payload: error.response.data });
@@ -40,7 +45,7 @@ const Register = (props) => {
       </Modal.Header>
       <Modal.Body>
         <div className="login-container">
-        <label for="phone">Phone Number</label>
+          <label for="phone">Phone Number</label>
           <input
             type="text"
             placeholder="Phone Number"

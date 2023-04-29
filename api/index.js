@@ -29,9 +29,14 @@ mongoose.connection.on("disconnected", () => {
 
 //MiddleWares
 
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  credentials: true,
+};
+
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use("/auth", authRoute);
 app.use("/users", usersRoute);
