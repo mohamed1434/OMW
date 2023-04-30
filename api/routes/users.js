@@ -6,6 +6,8 @@ import {
   getUsers,
 } from "../controllers/user.js";
 import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
+import { getUserHotels } from "../controllers/hotel.js";
+import { isOwner, isOwnerOfAllHotels } from "../utils/middlewares.js";
 const router = express.Router();
 
 // router.get("/checkAuth", verifyToken, (req, res, next) => {
@@ -27,9 +29,12 @@ router.put("/:id", verifyUser, updateUser);
 router.delete("/:id", verifyUser, deleteUser);
 
 //GET
-router.get("/:id", verifyUser, getUser);
+// router.get("/:id", verifyUser, getUser);
 
 //GET ALL
-router.get("/", verifyAdmin, getUsers);
+// router.get("/", verifyAdmin, getUsers);
+
+//GET HOTELS
+router.get("/properties", verifyUser, isOwnerOfAllHotels, getUserHotels);
 
 export default router;

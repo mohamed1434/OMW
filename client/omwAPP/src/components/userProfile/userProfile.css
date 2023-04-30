@@ -81,3 +81,49 @@
 .personalInfo>p{
     font-size: 14px;
 }
+
+.addBtn{
+    background-color: brown;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+}
+
+/*MyProperties styling*/
+.user-properties-container{
+    display: flex;
+    flex-direction: column;
+    margin: 100px;
+}
+
+.user-properties{
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* .user-properties > * {
+    flex-basis: 23%;
+} */
+
+.propertyCard{
+    border: none !important;
+    position: relative;
+}
+
+.propertyCard>img{
+    border-radius: 20px;
+}
+
+.my-dropdown{
+    position: absolute;
+    top: 40px;
+    left: 10px;
+}
+
+.my-dropdown>button{
+    background-color: transparent !important;
+    border: none !important;
+}

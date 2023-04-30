@@ -70,6 +70,15 @@ export const getHotels = async (req, res, next) => {
   }
 };
 
+export const getUserHotels = async (req, res, next) => {
+  try {
+    const hotels = await Hotel.find({ owner: req.user.id }).populate("owner");
+    res.json({ hotels });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const countByCity = async (req, res, next) => {
   const cities = req.query.cities.split(",");
   try {

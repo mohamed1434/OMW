@@ -12,6 +12,7 @@ import {
   faShieldHalved,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   const { user, dispatch } = useContext(AuthContext);
@@ -66,16 +67,19 @@ const UserProfile = () => {
             </p>
           </div>
 
-          <div className="personalInfo">
-            <FontAwesomeIcon
-              icon={faHouse}
-              style={{ marginBottom: "20px", fontSize: "20px" }}
-            />
-            <h4>Add a property</h4>
-            <p>
-              Add your own property to welcome guests to your house
-            </p>
-          </div>
+          <Link
+            to="/user-profile/add-property"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <div className="personalInfo">
+              <FontAwesomeIcon
+                icon={faHouse}
+                style={{ marginBottom: "20px", fontSize: "20px" }}
+              />
+              <h4>Add a property</h4>
+              <p>Add your own property to welcome guests to your house</p>
+            </div>
+          </Link>
 
           <div className="personalInfo">
             <FontAwesomeIcon
@@ -83,9 +87,7 @@ const UserProfile = () => {
               style={{ marginBottom: "20px", fontSize: "20px" }}
             />
             <h4>Delete a property</h4>
-            <p>
-              Delete a property you don't want it anymore for guests
-            </p>
+            <p>Delete a property you don't want it anymore for guests</p>
           </div>
 
           <div className="personalInfo">
@@ -94,10 +96,22 @@ const UserProfile = () => {
               style={{ marginBottom: "20px", fontSize: "20px" }}
             />
             <h4>Update a property</h4>
-            <p>
-              Update an existing property to provide the best info about it
-            </p>
+            <p>Update an existing property to provide the best info about it</p>
           </div>
+
+          <Link
+            to="/user-profile/my-properties"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <div className="personalInfo">
+              <FontAwesomeIcon
+                icon={faHouse}
+                style={{ marginBottom: "20px", fontSize: "20px" }}
+              />
+              <h4>My properties</h4>
+              <p>View all your properties that you own in order to edit or delete the property</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
