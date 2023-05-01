@@ -1,9 +1,54 @@
 import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
+import firebaseAdmin from "firebase-admin";
+import { v4 as uuidv4 } from "uuid";
+
+// import serviceAccount from "../onmyway-356ba-firebase-adminsdk-k5cl2-8106d3a9a4.json" assert { type: "json" };
+
+// firebaseAdmin.initializeApp({
+//   credential: firebaseAdmin.credential.cert(serviceAccount),
+//   storageBucket: "gs://onmyway-356ba.appspot.com"
+// });
+
+// export const createHotel = async (req, res, next) => {
+//   const { title, name, type, city, address, distance, photos, desc, price } =
+//     req.body;
+
+//   // Create a new hotel instance with the provided data
+//   const newHotel = new Hotel({
+//     title,
+//     name,
+//     type,
+//     city,
+//     address,
+//     distance,
+//     desc,
+//     price,
+//     owner: req.user.id, // assuming you're using passport.js for authentication
+//   });
+//   console.log(req.body);
+//   try {
+//     const imageUrls = await Promise.all(
+//       photos.map(async (photo) => {
+//         const bucket = firebaseAdmin.storage().bucket();
+//         const uuid = uuidv4();
+//         const file = bucket.file(`properties/${uuid}.jpg`);
+//         await file.save(photo.buffer, { contentType: "image/jpeg" });
+//         return file.getSignedUrl({ action: "read", expires: "03-17-2025" });
+//       })
+//     );
+//     newHotel.photos = imageUrls;
+//     const savedHotel = await newHotel.save();
+//     res.status(200).json(savedHotel);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const createHotel = async (req, res, next) => {
   const newHotel = new Hotel(req.body);
   newHotel.owner = req.user.id;
+  console.log(newHotel);
   try {
     const savedHotel = await newHotel.save();
     res.status(200).json(savedHotel);

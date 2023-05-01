@@ -3,7 +3,13 @@ import useFetch from "../../hooks/useFetch";
 import NavBar from "../navbar/NavBar";
 import { Button, Card, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStar,
+  faBars,
+  faFolderMinus,
+  faFolderBlank,
+  faFolderClosed,
+} from "@fortawesome/free-solid-svg-icons";
 import { useState, forwardRef } from "react";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import axios from "axios";
@@ -37,7 +43,7 @@ const MyProperties = () => {
     await axios.delete(baseURL + `/hotels/${propertyId}`, {
       withCredentials: true,
     });
-    window.location.reload();
+    reFetch();
   };
 
   return (
@@ -45,31 +51,40 @@ const MyProperties = () => {
       <NavBar />
 
       <div className="user-properties-container">
-        <div className="user-properties">
-          {data &&
-            data.hotels &&
-            data.hotels.map((item, index) => (
-              <Card style={{ width: "18rem" }} className="propertyCard">
-                <Dropdown className="my-dropdown">
-                  <Dropdown.Toggle
-                    as={CustomToggle}
-                    id="dropdown-custom-components"
-                  ></Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Update</Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleDelete(item._id)}>
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                <Card.Img variant="top" src={item.photos} />
-                <Card.Body>
-                  <Card.Title>{item.title}</Card.Title>
-                  <Card.Text>{item.desc}</Card.Text>
-                </Card.Body>
-              </Card>
-            ))}
-        </div>
+        {loading ? (
+          "Loading, please wait..."
+        ) : (
+          <div className="user-properties">
+            {data && data.hotels && data.hotels.length > 0 ? (
+              data.hotels.map((item, index) => (
+                <Card style={{ width: "18rem" }} className="propertyCard">
+                  <Dropdown className="my-dropdown">
+                    <Dropdown.Toggle
+                      as={CustomToggle}
+                      id="dropdown-custom-components"
+                    ></Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="#/action-1">Update</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleDelete(item._id)}>
+                        Delete
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <Card.Img variant="top" src={`${item.photos}`} />
+                  <Card.Body>
+                    <Card.Title>{item.title}</Card.Title>
+                    <Card.Text>{item.desc}</Card.Text>
+                  </Card.Body>
+                </Card>
+              ))
+            ) : (
+              <div className="noItems">
+                <FontAwesomeIcon icon={faFolderMinus} />
+                <p>You don't have any properties.</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import usersRoute from "./routes/users.js";
 import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import reviewRoute from "./routes/reviews.js";
+import uploadsRoute from "./routes/uploads.js"
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -30,7 +31,7 @@ mongoose.connection.on("disconnected", () => {
 //MiddleWares
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: "http://localhost:5173",
   credentials: true,
 };
 
@@ -43,6 +44,7 @@ app.use("/users", usersRoute);
 app.use("/hotels", hotelsRoute);
 app.use("/hotels/:id/reviews", reviewRoute);
 app.use("/rooms", roomsRoute);
+app.use("/uploads", uploadsRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
