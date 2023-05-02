@@ -6,6 +6,7 @@ import axios from "axios";
 import { v4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile } from "@fortawesome/free-solid-svg-icons";
+import "./userProfile.css";
 
 const AddProperty = () => {
   const [imageFiles, setImageFiles] = useState([]);
@@ -138,8 +139,6 @@ const AddProperty = () => {
     }
   };
   
-  
-
   return (
     <div>
       <NavBar />

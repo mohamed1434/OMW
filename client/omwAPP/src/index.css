@@ -923,11 +923,11 @@
 }
 
 .login-container>input{
-  width: 50%;
+  width: 100%;
   background-color: white;
   border: 1px solid #eee;
   border-radius: 20px;
-  padding: 5px;
+  padding: 10px;
 }
 
 .login-btn{

@@ -7,6 +7,7 @@ import Show from "./components/show/Show";
 import UserProfile from "./components/userProfile/UserProfile";
 import AddProperty from "./components/userProfile/AddProperty";
 import MyProperties from "./components/userProfile/MyProperties";
+import UpdateProperty from "./components/userProfile/UpdateProperty";
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,10 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/user-profile/add-property" element={<AddProperty />} />
         <Route path="/user-profile/my-properties" element={<MyProperties />} />
+        <Route
+          path="/user-profile/my-properties/edit/:id"
+          element={<UpdateProperty />}
+        />
       </Routes>
     </BrowserRouter>
   );

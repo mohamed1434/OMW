@@ -205,3 +205,32 @@
 .addBtn[disabled] {
     cursor: not-allowed;
   }
+
+/*UpdateProperty styling*/
+
+.editPhotos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.editPhotos>img{
+    width: 180px;
+    border-radius: 20px;
+}
+
+.deletePhotoBtn{
+    background-color: white !important;
+    padding: 5px 5px 5px 12px;
+    border-radius: 20px;
+    border: solid 1px rgba(0, 0, 0, 0.134) !important;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.deletePhotoBtn:hover{
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+}

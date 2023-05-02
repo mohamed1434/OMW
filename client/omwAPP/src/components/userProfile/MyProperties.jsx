@@ -14,6 +14,9 @@ import { useState, forwardRef } from "react";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./userProfile.css";
+import { deleteObject, listAll, ref } from "firebase/storage";
+import storage from "../../firebase";
 
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (
   <button
@@ -40,10 +43,32 @@ const MyProperties = () => {
   );
 
   const handleDelete = async (propertyId) => {
-    await axios.delete(baseURL + `/hotels/${propertyId}`, {
-      withCredentials: true,
-    });
-    reFetch();
+    try {
+      // Retrieve the property data
+      const res = await axios.get(baseURL + `/hotels/show/${propertyId}`, {
+        withCredentials: true,
+      });
+      const { owner } = res.data;
+
+      // Delete the property from the database
+      await axios.delete(baseURL + `/hotels/${propertyId}`, {
+        withCredentials: true,
+      });
+
+      // Delete the photos from Firebase Storage
+      const storageRef = ref(storage, `images/${owner}/${propertyId}/`);
+      const files = await listAll(storageRef);
+      await Promise.all(
+        files.items.map(async (item) => {
+          await deleteObject(item);
+        })
+      );
+
+      // Refresh the property list
+      reFetch();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -64,7 +89,14 @@ const MyProperties = () => {
                       id="dropdown-custom-components"
                     ></Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">Update</Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link
+                          to={`/user-profile/my-properties/edit/${item._id}`}
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          Update
+                        </Link>
+                      </Dropdown.Item>
                       <Dropdown.Item onClick={() => handleDelete(item._id)}>
                         Delete
                       </Dropdown.Item>
@@ -72,8 +104,8 @@ const MyProperties = () => {
                   </Dropdown>
                   <Card.Img variant="top" src={`${item.photos}`} />
                   <Card.Body>
-                    <Card.Title>{item.title}</Card.Title>
-                    <Card.Text>{item.desc}</Card.Text>
+                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Text>{item.title}</Card.Text>
                   </Card.Body>
                 </Card>
               ))

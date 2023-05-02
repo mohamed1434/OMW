@@ -34,7 +34,7 @@ const AuthReducer = (state, action) => {
         error: action.payload,
       };
     case "LOGOUT":
-      Cookies.remove("access_token");
+      // Cookies.remove("access_token");
       return {
         user: null,
         access_token: null,
