@@ -26,13 +26,13 @@ const router = express.Router();
 router.put("/:id", verifyUser, updateUser);
 
 //DELETE
-router.delete("/:id", verifyUser, deleteUser);
+router.delete("/:id", verifyAdmin, deleteUser); //it was verifyUser
 
 //GET
-// router.get("/:id", verifyUser, getUser);
+// router.get("/:id", verifyAdmin, getUser); //remove if something goes wrong
 
 //GET ALL
-// router.get("/", verifyAdmin, getUsers);
+router.get("/", verifyAdmin, getUsers);
 
 //GET HOTELS
 router.get("/properties", verifyUser, isOwnerOfAllHotels, getUserHotels);

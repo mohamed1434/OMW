@@ -234,3 +234,52 @@
 .deletePhotoBtn:hover{
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
 }
+
+/*Profile styling*/
+
+.profile-info-container{
+    display: flex;
+    justify-content: center;
+}
+
+.profile-picture{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 100px;
+    background-color: white;
+    /* max-width: 22%; */
+    width: 300px;
+    /* height: 30vh; */
+    border-radius: 20px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile-picture>img{
+    margin-top: 40px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    width: 35%;
+    height: 15vh;
+}
+
+.editContainer {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.editContainer>input{
+    margin-bottom: 20px;
+}
+
+.editContainer>button{
+    background-color: red;
+    border: none;
+    padding: 2px 10px 2px 10px;
+    color: white;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}

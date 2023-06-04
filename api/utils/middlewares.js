@@ -3,7 +3,7 @@ import Review from "../models/Review.js";
 export const isOwner = async (req, res, next) => {
   const { id } = req.params;
   const hotel = await Hotel.findById(id);
-  if (!hotel.owner.equals(req.user.id)) {
+  if (!hotel.owner.equals(req.user.id) && !req.user.isAdmin) {
     return res.status(405).json("You do not have permission to do that");
   }
   next();

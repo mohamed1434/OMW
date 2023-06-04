@@ -25,9 +25,11 @@ const UserProfile = () => {
           <h1>Account</h1>
           <span>
             <b>{user.username}</b>, {user.email}·{" "}
-            <a href="#" className="goTo">
+            {/* <a href="#" className="goTo"> */}
+            <Link to="/user-profile/profileInfo" style={{  color: "black" }}>
               <b>Go to Profile</b>
-            </a>
+            </Link>
+            {/* </a> */}
           </span>
         </div>
         <div className="user-options">

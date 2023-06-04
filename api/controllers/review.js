@@ -81,10 +81,10 @@ export const getReviews = async (req, res, next) => {
   }
 };
 
-export const getPropertyReviews = async (req, res, next) => {
-  try {
-    const hotelId = req.params.id;
-  } catch (error) {
+// export const getPropertyReviews = async (req, res, next) => {
+//   try {
+//     const hotelId = req.params.id;
+//   } catch (error) {
     
-  }
-};
+//   }
+// };

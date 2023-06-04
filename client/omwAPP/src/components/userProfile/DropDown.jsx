@@ -25,13 +25,10 @@ const DropDown = () => {
   const { user, dispatch } = useContext(AuthContext);
   const baseURL = import.meta.env.VITE_REACT_API_URL;
   const handleLogout = async () => {
-    // await axios.post(baseURL + "/auth/logout");
-    // localStorage.removeItem("user");
-    // window.location.reload();
-    // navigate("/");
-
     try {
-      const res = await axios.post(baseURL + "/auth/logout");
+      const res = await axios.post(baseURL + "/auth/logout", {
+        withCredentials: true,
+      });
       dispatch({ type: "LOGOUT", payload: res.data });
       console.log(res);
     } catch (error) {

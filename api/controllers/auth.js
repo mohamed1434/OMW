@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { createError } from "../utils/error.js";
 import jwt from "jsonwebtoken";
-
+export const TOKEN = "access_token";
 export const register = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
@@ -12,6 +12,7 @@ export const register = async (req, res, next) => {
       username: req.body.username,
       email: req.body.email,
       password: hash,
+      isAdmin: req.body.isAdmin
     });
     await newUser.save();
     // res.status(200).send("Successfully created a user");
@@ -21,7 +22,7 @@ export const register = async (req, res, next) => {
     );
     const { password, isAdmin, ...otherDetails } = newUser._doc;
     res
-      .cookie("access_token", token, {
+      .cookie(TOKEN, token, {
         httpOnly: true,
       })
       .status(200)
@@ -49,13 +50,13 @@ export const login = async (req, res, next) => {
       process.env.JWT
     );
 
-    const { password, isAdmin, img, ...otherDetails } = user._doc;
+    const { password, isAdmin, ...otherDetails } = user._doc; //return img alone
     res
-      .cookie("access_token", token, {
+      .cookie(TOKEN, token, {
         httpOnly: true,
       })
       .status(200)
-      .json({ ...otherDetails, img });
+      .json({ details:{...otherDetails}, isAdmin }); //if something goes wrong remove isAdmin and details
   } catch (error) {
     next(error);
   }
@@ -63,11 +64,10 @@ export const login = async (req, res, next) => {
 
 export const logout = async (req, res) => {
   // Set token to none and expire after 5 seconds
-  res.cookie("access_token", "none", {
-    // expires: new Date(Date.now() + 5 * 1000),
-    httpOnly: true,
-  });
   res
     .status(200)
+    .cookie(TOKEN, "none", {
+      httpOnly: true,
+    })
     .json({ success: true, message: "User logged out successfully" });
 };

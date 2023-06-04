@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 const Login = (props) => {
   const baseURL = import.meta.env.VITE_REACT_API_URL;
@@ -36,9 +35,7 @@ const Login = (props) => {
         withCredentials: true,
       });
       if (res && res.data) {
-        dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-        const access_token = Cookies.get("access_token"); // Wait for the cookie to be set
-        Cookies.set("access_token", access_token, { expires: 1 }); // set the token in a cookie with a 1-day expiration
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details }); //if something goes wrong remove details here and from backend
         props.onHide();
       } else {
         dispatch({ type: "LOGIN_FAILURE", payload: "Invalid response" });

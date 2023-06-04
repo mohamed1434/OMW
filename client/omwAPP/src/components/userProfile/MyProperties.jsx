@@ -94,7 +94,15 @@ const MyProperties = () => {
                           to={`/user-profile/my-properties/edit/${item._id}`}
                           style={{ textDecoration: "none", color: "black" }}
                         >
-                          Update
+                          Edit
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link
+                          to={`/user-profile/my-properties/rooms/${item._id}`}
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          Add rooms
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item onClick={() => handleDelete(item._id)}>

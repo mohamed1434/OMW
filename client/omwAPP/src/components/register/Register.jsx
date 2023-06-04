@@ -26,8 +26,8 @@ const Register = (props) => {
         withCredentials: true,
       });
       dispatch({ type: "REGISTER_SUCCESS", payload: res.data });
-      const access_token = Cookies.get("access_token");
-      Cookies.set("access_token", access_token, { expires: 1 });
+      // const access_token = Cookies.get("access_token");
+      // Cookies.set("access_token", access_token, { expires: 1 });
       props.onHide();
     } catch (error) {
       dispatch({ type: "REGISTER_FAILURE", payload: error.response.data });
